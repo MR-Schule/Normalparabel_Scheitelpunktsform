@@ -1,0 +1,207 @@
+<!doctype html><html lang="de"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Parabelwerkstatt | Mathewerkstatt</title><style>
+:root{--ink:#282137;--accent:#bd246f;--accent-dark:#971852;--canvas:#f4f4f0;--tint:#ffedf6;--line:#e8deea}*{box-sizing:border-box}body{margin:0;background:var(--canvas);color:var(--ink);font-family:system-ui,sans-serif}header{padding:23px 5%;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);gap:15px}header>span,.eyebrow{font-size:11px;letter-spacing:2px;font-weight:700}.brand{display:inline-flex;align-items:center;gap:11px;color:var(--ink);font-weight:800}.brand span{font-size:20px}.brand .brand-icon{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:var(--accent);color:#fff;font-size:25px;line-height:1}main{max-width:1240px;margin:auto;padding:0 35px}.intro{padding:48px 0 35px;position:relative}.eyebrow{color:var(--accent)}h1{font-size:clamp(35px,5vw,60px);letter-spacing:-2.5px;line-height:1.07;margin:16px 0}p{line-height:1.65;color:#5e5268}.formula{position:absolute;right:2%;top:90px;background:var(--tint);transform:rotate(-4deg);padding:28px;border-radius:22px;font-size:27px;font-family:Georgia,serif}.layout{display:grid;grid-template-columns:260px 1fr;gap:26px}aside{padding:20px 0}aside h2{font-size:14px;margin:0 0 18px}nav{display:grid;gap:8px}button{font:inherit;cursor:pointer;border:1px solid var(--line);border-radius:10px;padding:12px 17px;background:white;color:var(--ink)}button:hover{background:var(--tint)}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--accent-dark);outline-offset:3px}nav button{text-align:left;background:transparent;border-color:transparent}nav button.active{background:var(--accent);color:white}.workspace{background:#fff;border:1px solid var(--line);border-radius:22px;padding:30px;min-height:485px;box-shadow:0 10px 32px #3d16450a}.topline{display:flex;justify-content:space-between;font-size:11px;letter-spacing:1.3px;color:#6a4b64}.workspace h2{font-size:27px;letter-spacing:-.7px;margin-bottom:4px}.progress{margin:25px 12px;font-size:14px}.progress small{display:block;font-size:11px;line-height:1.5}progress{width:100%;accent-color:var(--accent);height:7px;margin:12px 0}.text{border:0;background:transparent;padding:15px 0;font-size:12px;text-decoration:underline}.question{font-size:21px;margin:20px 0}.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}.choices button{text-align:left}.fields{display:flex;gap:14px;flex-wrap:wrap}label{display:grid;gap:7px;font-size:14px}input[type=text]{width:100px;padding:12px;border:1px solid #9c8ba4;border-radius:8px;font:inherit}input[type=range]{width:100%;accent-color:var(--accent)}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.primary{background:var(--accent);color:white}.primary:hover,nav button.active:hover{background:var(--accent-dark)}.feedback{padding:14px;border-radius:10px;background:#edf2e8;margin-top:15px;line-height:1.6}.feedback.bad{background:#fff0e4}.graph{width:100%;max-height:340px;display:block;background:#fdfbfe;border:1px solid var(--line);border-radius:12px;margin:15px 0}.lab{display:grid;grid-template-columns:1fr 180px;gap:22px}.lab label{margin:13px 0}.equation{font-family:Georgia,serif;font-size:26px;margin:20px 0}.note{font-size:13px}footer{padding:30px 0;font-size:11px;color:#65576d} @media(max-width:760px){main{padding:0 18px}header>span,.formula{display:none}.intro{padding-top:30px}.layout{grid-template-columns:1fr;gap:10px}aside{padding:0}nav{display:flex;overflow-x:auto}nav button{white-space:nowrap}.progress{margin:12px}.progress small,.progress .text,aside h2{display:none}.workspace{padding:20px}.lab{grid-template-columns:1fr}.choices{grid-template-columns:1fr}h1{letter-spacing:-1.5px}}
+
+.blanks{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:20px 15px;background:#f8f5fa;border-radius:12px}.blanks input[type=text]{width:70px;font-family:system-ui,sans-serif;font-size:20px;text-align:center}.blanks select{font:inherit;font-size:22px;border:1px solid #9c8ba4;border-radius:8px;padding:9px;background:white;color:var(--ink)}select:focus-visible{outline:3px solid var(--accent-dark);outline-offset:3px}.mission{padding:18px;background:var(--tint);border-left:4px solid var(--accent);border-radius:10px;margin-top:20px}.mission p{margin-bottom:0;color:var(--ink)}
+
+.value-table{border-collapse:collapse;width:100%;margin:20px 0}.value-table th,.value-table td{padding:14px;text-align:center;border:1px solid #a9b9aa}.value-table th{background:#f8f5fa}.value-table input[type=text]{width:80px;text-align:center}.vertex{width:max-content;max-width:100%;gap:12px}.lab .graph{max-height:none;width:100%;aspect-ratio:4/3}.lab{grid-template-columns:minmax(0,1fr) 180px}@media(max-width:760px){.lab{grid-template-columns:1fr}.value-table th,.value-table td{padding:8px}.value-table input[type=text]{width:60px}}
+
+/* Responsive layout and touch controls. */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+.layout{grid-template-columns:260px minmax(0,1fr)}
+.layout>*,.workspace,#content,.lab>*,aside,nav{min-width:0}
+.mobile-station{display:none}
+.equation-product,.equation-bracket,.equation-tail{display:inline-flex;align-items:center;gap:10px;flex:none}
+button,input,select{touch-action:manipulation}
+.slider-controls{display:flex;align-items:center;gap:10px;min-width:0}
+.slider-controls button{flex:0 0 44px;min-height:44px;padding:4px;font-size:23px}
+.slider-controls input{min-width:0;flex:1;height:44px;margin:0}
+.graph{height:auto}
+select,input[type=text]{font-size:16px}
+@media(max-width:1000px){
+ .layout{grid-template-columns:minmax(0,1fr)}
+ aside{padding:0}.mobile-station{display:block}
+ nav{display:none}.progress{margin:12px 0}.progress small,.progress .text,aside h2{display:none}
+ .progress progress{margin:6px 0}.formula{display:none}.intro{padding:24px 0 18px}
+ h1{font-size:40px;letter-spacing:-1.5px;margin:12px 0}.intro p{margin:10px 0}
+ .workspace{min-height:0}
+}
+@media(max-width:600px){
+ header{padding:14px 16px}header>span{display:none}main{padding:0 12px}
+ .brand span{font-size:18px}.intro .eyebrow{font-size:10px;letter-spacing:1px}
+ h1{font-size:32px;letter-spacing:-1px}.intro p{font-size:14px;line-height:1.5}
+ .layout{gap:8px}.workspace{padding:16px 12px;border-radius:16px}
+ .workspace h2{font-size:24px;line-height:1.2}.topline{font-size:10px;letter-spacing:.5px;gap:8px;flex-wrap:wrap}
+ .workspace p{font-size:15px;line-height:1.55}.question{font-size:18px;line-height:1.55;margin:16px 0}
+ .choices{grid-template-columns:minmax(0,1fr)}button{min-height:46px}
+ .choices button{white-space:normal;overflow-wrap:anywhere}
+ .actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .actions button{font-size:14px;padding:10px 8px;white-space:normal}
+ .blanks{padding:12px 8px;gap:9px;font-size:22px;line-height:1.5}
+ .blanks .equation-name{flex-basis:100%}
+ .equation-product,.equation-bracket,.equation-tail{gap:5px}
+ .blanks input[type=text]{width:50px;min-width:0;min-height:46px;padding:7px 3px;font-size:18px}
+ .blanks select{width:46px;min-width:0;min-height:46px;padding:5px 1px;font-size:19px}
+ .vertex{gap:8px}.vertex input[type=text]{width:64px}
+ .value-table{table-layout:fixed;font-size:16px}.value-table th,.value-table td{padding:6px 3px}
+ .value-table input[type=text]{width:100%;min-width:0;min-height:46px;padding:7px 2px;font-size:17px}
+ .lab{grid-template-columns:minmax(0,1fr);gap:4px}.lab .equation{font-size:23px;margin:16px 0 8px}
+ .lab .graph{width:100%;max-height:none;aspect-ratio:4/3;margin:8px 0}
+ .graph text{font-size:20px}.graph text:last-child,.graph text:nth-last-child(2){font-size:22px}
+ .lab label{margin:8px 0;font-size:15px}.slider-controls{gap:12px}
+ .mission{padding:12px;margin-top:16px}.mission .eyebrow{font-size:10px;letter-spacing:.8px}
+ .feedback{font-size:15px;padding:12px;overflow-wrap:anywhere}
+ footer{padding:22px 0;font-size:11px;line-height:1.6}
+}
+
+
+:root{--marker-x:#ffe666;--marker-y:#a8ed9c;--marker-factor:#ffadd6}
+mark[data-coordinate]{color:inherit;padding:0 .16em;border-radius:.16em}
+[data-coordinate="x"]{--coordinate-color:var(--marker-x)}
+[data-coordinate="y"]{--coordinate-color:var(--marker-y)}
+[data-coordinate="factor"]{--coordinate-color:var(--marker-factor)}
+mark[data-coordinate], #content input[data-coordinate]{background:linear-gradient(transparent 24%,var(--coordinate-color) 24% 93%,transparent 93%)}
+#content input[data-coordinate]{background-color:#fff}
+
+.station-check{color:#20864a;margin-inline-start:.35em;font-size:1.22em;line-height:1;font-weight:800}
+nav button.active .station-check{color:#cbffd7}
+.station-hint:has(#station-hint:not(:empty)){margin-top:14px;padding:12px 14px;border-radius:10px;background:#eef7ef;color:#185c33}
+
+nav button[data-mode]{font-size:1.0625rem}
+#next-station{margin-top:10px;text-align:left}
+@media(max-width:1000px){
+ .mobile-station-label{display:block;margin-bottom:7px;font-size:.875rem;font-weight:650}
+ .mobile-station summary{position:relative;display:block;list-style:none;cursor:pointer;min-height:48px;padding:12px;padding-inline-end:38px;border:1px solid var(--line);border-radius:10px;background:white;font-size:1.0625rem}
+ .mobile-station summary::-webkit-details-marker{display:none}
+ .mobile-station summary::after{content:"";position:absolute;inset-inline-end:15px;top:50%;width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-70%) rotate(45deg);pointer-events:none}
+ #mobile-current{display:inline;font-weight:700}
+ #mobile-nav{display:grid;gap:4px;padding:6px 0}
+ #mobile-nav button{white-space:normal}
+}
+</style><body><header><div class="brand"><span class="brand-icon" aria-hidden="true">π</span><span>Mathewerkstatt</span></div><span>LERNAPPS FÜR MATHEMATIK</span></header><main><section class="intro"><div class="eyebrow">QUADRATISCHE FUNKTIONEN</div><h1>Parabelwerkstatt</h1><p>Entdecke, verschiebe und verstehe Parabeln.<br>Übe in deinem Tempo – mit Tipps und direkter Rückmeldung.</p><div class="formula">f(x) = <mark data-coordinate="factor">a</mark>(x − d)² + e</div></section><div class="layout"><aside><h2>Deine Werkstatt</h2><div class="mobile-station"><span class="mobile-station-label" id="mobile-station-label">Übungsbereich auswählen</span><details id="mobile-station"><summary aria-labelledby="mobile-station-label mobile-current"><span id="mobile-current"></span><span class="station-check" id="mobile-current-check" aria-hidden="true" hidden>✓</span></summary><nav id="mobile-nav" aria-label="Übungsbereiche"></nav></details></div><nav id="nav" aria-label="Übungsbereiche"></nav><div class="progress"><span id="score"></span><progress id="bar" max="30" value="0"></progress><small>Richtig gelöste Aufgaben · auf diesem Gerät</small><button class="text" id="reset">Fortschritt zurücksetzen</button></div></aside><section class="workspace"><div class="topline"><span id="tag"></span><span id="count"></span></div><h2 id="title" tabindex="-1"></h2><p id="desc"></p><div id="content"></div><div class="station-hint"><div id="station-hint" role="status"></div><button id="next-station" type="button" hidden></button></div></section></div><footer>Passend zum Arbeitsblatt „Normalparabel / Scheitelpunktform“ · Keine Namen, keine Anmeldung in der App. Fortschritt wird nur im Browser gespeichert.</footer></main><script>
+const $=id=>document.getElementById(id), names=['Normalparabel & Symmetrie','Streckung & Spiegelung','Verschiebungen verstehen','Scheitelpunkt ablesen','Vom Graph zur Gleichung','Parabel-Labor'];let mode=0,q,done=false,attempt=false,serial=0,basicsNumber=0,stats;try{stats=JSON.parse(localStorage.getItem('parabel-v1'))}catch{}
+stats=names.map((_,i)=>Array.isArray(stats)&&Number.isSafeInteger(stats[i])&&stats[i]>=0?stats[i]:0);const rand=a=>a[Math.floor(Math.random()*a.length)],num=v=>String(v).replace('.',','),sign=v=>v<0?' − '+num(-v):' + '+num(v),term=(a,d,e)=>`${a===1?'':a===-1?'−':num(a)+' · '}${d===0?'x²':'(x'+sign(-d)+')²'}${e===0?'':sign(e)}`;
+
+function factorMark(value) {
+ return `<mark data-coordinate="factor">${value}</mark>`;
+}
+function coordinateText(element, value) {
+ const parts = value.split(/([SP]\()([^()|]+?) \| ([^()|]+?)(\))/g);
+ const nodes = [parts[0]];
+ for (let i = 1; i < parts.length; i += 5) {
+  const x = document.createElement('mark');
+  const y = document.createElement('mark');
+  x.dataset.coordinate = 'x';
+  y.dataset.coordinate = 'y';
+  x.textContent = parts[i + 1];
+  y.textContent = parts[i + 2];
+  nodes.push(parts[i], x, ' | ', y, parts[i + 3], parts[i + 4]);
+ }
+ const factors = /(?:\b[afg]\(x\) = |\b(?:Faktor(?: a)?(?: =)?|a =) )(-?\d+(?:,\d+)?|−\d+(?:,\d+)?|−(?=x|\(x)|a(?=\(x))/g;
+ element.replaceChildren(...nodes.flatMap(node => {
+  if (typeof node !== 'string') return [node];
+  const segments = [];
+  let offset = 0;
+  for (const match of node.matchAll(factors)) {
+   const start = match.index + match[0].length - match[1].length;
+   const mark = document.createElement('mark');
+   mark.dataset.coordinate = 'factor';
+   mark.textContent = match[1];
+   segments.push(node.slice(offset, start), mark);
+   offset = start + match[1].length;
+  }
+  segments.push(node.slice(offset));
+  return segments;
+ }));
+}
+function axisMarker(x, y, width, axis) {
+ return `<rect x="${x}" y="${y}" width="${width}" height="12" rx="2" fill="var(--marker-${axis})"/>`;
+}
+function updateStationHint(){
+ const hint=$('station-hint');
+ const message=stats[mode]<2?'':mode<names.length-1
+  ?'Du hast hier mindestens zwei Aufgaben gelöst. Du kannst zur nächsten Übungsstation wechseln.'
+  :'Du hast im Parabel-Labor mindestens zwei Missionen gelöst.';
+ if(hint.textContent!==message)hint.textContent=message;
+ const nextStation=$('next-station');
+ nextStation.hidden=stats[mode]<2||mode>=names.length-1;
+ nextStation.textContent=nextStation.hidden?'':'Weiter zu '+names[mode+1];
+}
+function score(){
+ const total=stats.reduce((sum,count)=>sum+count,0);
+ $('score').textContent=total+' Aufgaben gemeistert';
+ $('bar').value=total;
+ for(const button of document.querySelectorAll('[data-mode]')){
+  const i=Number(button.dataset.mode);
+  const complete=stats[i]>=2;
+  button.querySelector('.station-check').hidden=!complete;
+  if(complete)button.setAttribute('aria-label',names[i]+' – mindestens zwei Aufgaben gelöst');
+  else button.removeAttribute('aria-label');
+ }
+ $('mobile-current-check').hidden=stats[mode]<2;
+ updateStationHint();
+ try{localStorage.setItem('parabel-v1',JSON.stringify(stats))}catch{}
+}
+function svg(a,d,e,point=false){let s='<svg class="graph" viewBox="0 0 480 360" role="img" aria-label="Koordinatensystem mit Einheitsraster, beschrifteten Achsen und Pfeilspitzen: Parabel mit markiertem Scheitelpunkt'+(point?' und weiterem Punkt':'')+'">';const X=x=>240+x*24,Y=y=>180-y*24;
+for(let i=-9;i<=9;i++)s+=`<path d="M${X(i)} 12V348" stroke="#a9b9aa" stroke-width="0.9"/>`;
+for(let j=-7;j<=7;j++)s+=`<path d="M12 ${Y(j)}H468" stroke="#a9b9aa" stroke-width="0.9"/>`;
+s+='<defs><clipPath id="clip"><rect x="12" y="12" width="456" height="336"/></clipPath><marker id="axis-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#304d43"/></marker></defs><path d="M12 180H466" stroke="#304d43" stroke-width="1.7" marker-end="url(#axis-arrow)"/><path d="M240 348V14" stroke="#304d43" stroke-width="1.7" marker-end="url(#axis-arrow)"/>';
+for(let i=-9;i<=9;i++){if(i)s+=`<path d="M${X(i)} 176V184" stroke="#304d43" stroke-width="1.3"/>`;if(i&&i%2===0)s+=axisMarker(X(i)-10,191,20,'x')+`<text x="${X(i)}" y="201" font-size="15" font-weight="600" text-anchor="middle" fill="#153e39" >${i}</text>`}
+for(let j=-7;j<=7;j++){if(j)s+=`<path d="M236 ${Y(j)}H244" stroke="#304d43" stroke-width="1.3"/>`;if(j&&j%2===0)s+=axisMarker(209,Y(j)-5,22,'y')+`<text x="229" y="${Y(j)+5}" font-size="15" font-weight="600" text-anchor="end" fill="#153e39" >${j}</text>`}
+s+='<text x="226" y="201" font-size="14" fill="#153e39">0</text><text x="458" y="165" font-size="18" font-style="italic" fill="#153e39">x</text><text x="252" y="25" font-size="18" font-style="italic" fill="#153e39">y</text>';
+let path='';for(let x=-10;x<=10;x+=.04)path+=(path?'L':'M')+X(x).toFixed(2)+' '+Y(a*(x-d)**2+e).toFixed(2);s+=`<path d="${path}" fill="none" stroke="#22755f" stroke-width="3" clip-path="url(#clip)"/><circle cx="${X(d)}" cy="${Y(e)}" r="5" fill="#b65d2e"/>`;if(point)s+=`<circle cx="${X(d+1)}" cy="${Y(e+a)}" r="5" fill="#b65d2e"/>`;return s+'</svg>'}
+function switchMode(i){mode=i;$('mobile-current').textContent=names[i];$('mobile-current-check').hidden=stats[i]<2;$('mobile-station').open=false;document.querySelectorAll('[data-mode]').forEach(button=>{const active=Number(button.dataset.mode)===i;button.classList.toggle('active',active);if(active)button.setAttribute('aria-current','step');else button.removeAttribute('aria-current')});$('tag').textContent=i===5?'AUSPROBIEREN & ENTDECKEN':'ÜBUNGSSTATION 0'+(i+1);$('title').textContent=names[i];$('desc').textContent=['Quadratzahlen berechnen und die Symmetrie der Normalparabel verstehen.','Was bewirkt der Faktor a? Unterscheide Öffnung und Breite.','Übersetze eine Verschiebung in die Scheitelpunktform.','Lies den Scheitelpunkt direkt aus der Funktionsgleichung ab.','Ergänze die Funktionsgleichung anhand von Scheitelpunkt und einem weiteren Punkt.','Löse die Mission: Stelle mit den Reglern die gesuchte Parabel ein.'][i];next();updateStationHint()}
+function next(){done=false;attempt=false;serial++;$('count').textContent=mode===5?'':stats[mode]+' gelöst';const c=$('content');if(mode===5){startMission();return}let a=rand(mode===1?[.25,.5,1.5,2,3,-.25,-.5,-1.5,-2,-3]:[.5,1,2,-1,-2]),d=rand([-3,-2,-1,1,2,3]),e=rand([-3,-2,-1,0,1,2,3]);q={a,d,e};let body='';if(mode===0){basicsNumber++;if(basicsNumber%2===1){const x=rand([1,2,3,4,5]);q.answers=[x*x,0,x*x];q.tip='Quadrieren bedeutet x · x. Beispielsweise ist (−3)² = (−3) · (−3) = 9.';q.solution=`f(−${x}) = ${x*x}, f(0) = 0 und f(${x}) = ${x*x}. Die Werte für x und −x sind gleich.`;body=`<div class="question"><strong>Aufgabe: Wertetabelle ergänzen</strong></div><p>Für die Normalparabel gilt f(x) = x². Berechne die drei fehlenden Funktionswerte.</p><table class="value-table"><thead><tr><th scope="row"><mark data-coordinate="x">x</mark></th><th scope="col"><mark data-coordinate="x">−${x}</mark></th><th scope="col"><mark data-coordinate="x">0</mark></th><th scope="col"><mark data-coordinate="x">${x}</mark></th></tr></thead><tbody><tr><th scope="row"><mark data-coordinate="y">f(x)</mark></th>${[-x,0,x].map((v,i)=>`<td><input id="v${i}" type="text" inputmode="decimal" data-coordinate="y" aria-label="Funktionswert für x gleich ${v}" autocomplete="off"></td>`).join('')}</tr></tbody></table>`}else{q.options=['Zur y-Achse','Zur x-Achse','Zum Ursprung','Zu keiner Achse'];q.correct=0;q.tip='Vergleiche f(2) und f(−2). Die Punkte liegen gleich hoch.';q.solution='Die Normalparabel ist achsensymmetrisch zur y-Achse: f(−x) = (−x)² = x² = f(x).';body='<div class="question"><strong>Aufgabe: Symmetrie erkennen</strong></div><p>Zu welcher Achse ist die Normalparabel f(x) = x² symmetrisch? Wähle die richtige Antwort.</p>'+choices()}}if(mode===1){q.options=['Nach oben, schmaler','Nach oben, breiter','Nach unten, schmaler','Nach unten, breiter','Nach oben, gleich breit','Nach unten, gleich breit'];q.correct=(a<0?2:0)+(Math.abs(a)===1?(a<0?3:4):Math.abs(a)<1?1:0);q.tip='Das Vorzeichen legt die Öffnung fest. Für |a| > 1 wird die Parabel schmaler, für 0 < |a| < 1 breiter.';q.solution=`a = ${num(a)}: ${q.options[q.correct].toLowerCase()} als die Normalparabel. Bei a < 0 kommt eine Spiegelung an der x-Achse hinzu.`;body=`<div class="question"><span id="given-equation">g(x) = ${term(a,0,0)}</span>. Wie sieht der Graph im Vergleich zur Normalparabel aus?</div>`+choices()}if(mode===2){q.answers=[a,Math.abs(d),Math.abs(e)];q.tip='Nach rechts: Minus in der Klammer. Nach links: Plus in der Klammer. Nach oben: Plus außerhalb, nach unten: Minus außerhalb.';q.solution=`g(x) = ${term(a,d,e)}. ${Math.abs(d)} LE nach ${d>0?'rechts':'links'} ergibt (x ${d>0?'−':'+'} ${Math.abs(d)})².`;body=`<div class="question">K<sub>g</sub> entsteht aus der Normalparabel durch ${a<0?'Spiegelung an der x-Achse, ':''}${Math.abs(a)!==1?'Streckung in y-Richtung mit Faktor '+factorMark(num(Math.abs(a)))+', ':''}Verschiebung um ${Math.abs(d)} LE nach ${d>0?'rechts':'links'}${e?' und '+Math.abs(e)+' LE nach '+(e>0?'oben':'unten'):''}.</div><p>Setze die Zahlen direkt ein. Wähle die Rechenzeichen; in die beiden Verschiebungslücken gehören Zahlen ohne Vorzeichen. Faktor 1 darf leer bleiben, für −1 genügt „−“. Bei einer Verschiebung um 0 darf das Zahlenfeld leer und das Zeichen „?“ bleiben.</p>`+equationFields()}if(mode===3){q.answers=[d,e];q.tip='Achte auf das umgekehrte Vorzeichen in der Klammer: (x + 2)² bedeutet d = −2.';q.solution=`S(${d} | ${e}), denn g(x) = a(x − d)² + e.`;body=`<div class="question"><span id="given-equation">g(x) = ${term(a,d,e)}</span><br>Welchen Scheitelpunkt hat der Graph?</div>`+vertexFields()}if(mode===4){q.answers=[a,Math.abs(d),Math.abs(e)];q.tip='Lies zuerst S(d | e) ab. Setze dann P in y = a(x − d)² + e ein. Hier liegt P genau 1 LE rechts vom Scheitelpunkt.';q.solution=`S(${d} | ${e}), P(${d+1} | ${num(e+a)}). Daher ${num(e+a)} = a · 1² + (${e}), also a = ${num(a)}. g(x) = ${term(a,d,e)}.`;body=svg(a,d,e,true)+`<p id="given-points">Markiert sind S(${d} | ${e}) und P(${d+1} | ${num(e+a)}). Setze die Zahlen direkt in die Funktionsgleichung ein und wähle die Rechenzeichen.</p>`+equationFields()}c.innerHTML=body+'<div class="actions">'+(q.answers?'<button class="primary" id="check">Prüfen</button>':'')+'<button id="hint">Tipp</button><button id="solution">Lösung zeigen</button><button id="next">Neue Übungsaufgabe →</button></div><div id="feedback" role="status" aria-live="polite"></div>';if(mode===1||mode===3)coordinateText($('given-equation'),$('given-equation').textContent);if(mode===4)coordinateText($('given-points'),$('given-points').textContent);if(q.answers)$('check').onclick=check;document.querySelectorAll('[data-choice]').forEach(b=>b.onclick=()=>check(Number(b.dataset.choice)));$('hint').onclick=()=>feedback(q.tip);$('solution').onclick=()=>{attempt=true;feedback(q.solution)};$('next').onclick=next;document.querySelectorAll('input').forEach(i=>i.onkeydown=ev=>{if(ev.key==='Enter')check()});if(mode===2||mode===4)$('v0').oninput=()=>{const value=normalizeEntry($('v0').value);$('multiplication').hidden=value===''||value==='-'}}
+function vertexFields(){return '<div class="equation blanks vertex"><span>S(</span><input type="text" inputmode="text" id="v0" data-coordinate="x" aria-label="x-Koordinate des Scheitelpunkts" autocomplete="off"><span>|</span><input type="text" inputmode="text" id="v1" data-coordinate="y" aria-label="y-Koordinate des Scheitelpunkts" autocomplete="off"><span>)</span></div>'}
+function fields(labels){return '<div class="fields">'+labels.map((l,i)=>`<label>${l}<input type="text" inputmode="decimal" id="v${i}" autocomplete="off"></label>`).join('')+'</div>'}function choices(){return '<div class="choices">'+q.options.map((x,i)=>`<button data-choice="${i}">${x}</button>`).join('')+'</div>'}function feedback(t,bad=false){$('feedback').className='feedback'+(bad?' bad':'');coordinateText($('feedback'),t)}function check(v){if(done)return;let ok;if(q.answers){const values=q.answers.map((_,i)=>normalizeEntry($('v'+i).value));if(mode===2||mode===4){const error=equationError(q,values,$('horizontal-sign').value,$('vertical-sign').value);if(error){feedback(error,true);return}ok=true}else{if(values.some(v=>v===''||!Number.isFinite(Number(v)))){feedback('Bitte trage in jedes Feld eine Zahl ein. Dezimalkomma ist möglich.',true);return}ok=values.every((v,i)=>Math.abs(Number(v)-q.answers[i])<.00001)}}else ok=v===q.correct;if(ok){done=true;if(!attempt)stats[mode]++;score();$('count').textContent=stats[mode]+' gelöst';feedback((attempt?'Jetzt stimmt es! ':'Richtig! ')+q.solution+(attempt?' Löse die nächste Aufgabe ohne aufgedeckte Lösung, um deinen Fortschritt zu erhöhen.':''))}else feedback('Noch nicht ganz. '+q.tip,true)}
+function normalizeEntry(value){return String(value).trim().replace(/,/g,'.').replace(/−/g,'-')}
+function equationFields(){return `<div class="equation blanks"><span class="equation-name">g(x) =</span><span class="equation-product"><input type="text" inputmode="text" id="v0" data-coordinate="factor" aria-label="Faktor vor der Klammer" autocomplete="off"><span class="equation-bracket"><span><span id="multiplication" hidden>· </span>(x</span><select id="horizontal-sign" aria-label="Rechenzeichen in der Klammer"><option value="">?</option><option value="+">+</option><option value="-">−</option></select><input type="text" inputmode="decimal" id="v1" aria-label="Zahl in der Klammer ohne Vorzeichen" autocomplete="off"><span>)²</span></span></span><span class="equation-tail"><select id="vertical-sign" aria-label="Rechenzeichen nach der Klammer"><option value="">?</option><option value="+">+</option><option value="-">−</option></select><input type="text" inputmode="decimal" id="v2" aria-label="Zahl nach der Klammer ohne Vorzeichen" autocomplete="off"></span></div>`}
+function equationError(task,values,h,v){
+ const raw=values.map(normalizeEntry);
+ const factor=raw[0]===''?1:raw[0]==='-'?-1:Number(raw[0]);
+ if(!Number.isFinite(factor))return 'Trage einen gültigen Faktor ein. Für 1 darf das Feld leer bleiben, für −1 genügt ein Minuszeichen.';
+ if(factor!==task.a)return mode===4?'Prüfe den Faktor vor der Klammer anhand des gegebenen Punktes. Ein leeres Feld bedeutet Faktor 1; ein einzelnes Minus bedeutet Faktor −1.':'Prüfe den Faktor vor der Klammer. Ein leeres Feld bedeutet Faktor 1; ein einzelnes Minus bedeutet Faktor −1.';
+ for(const [i,target] of [[1,task.d],[2,task.e]]){
+  if(raw[i]===''&&target!==0)return i===1?'Trage die Anzahl der LE der waagerechten Verschiebung in die Klammer ein.':'Trage die Anzahl der LE der senkrechten Verschiebung nach der Klammer ein.';
+  if(!Number.isFinite(Number(raw[i])))return 'Trage in die Verschiebungslücken gültige Zahlen ein. Dezimalkomma ist möglich.';
+  if(Number(raw[i])<0)return 'Trage in die beiden Verschiebungslücken Zahlen ohne Vorzeichen ein. Plus oder Minus wählst du daneben aus.';
+ }
+ if(Number(raw[1])!==Math.abs(task.d))return 'Die Zahl in der Klammer ist die Anzahl der LE, um die nach rechts oder links verschoben wird.';
+ if(task.d!==0&&!h)return 'Wähle das Rechenzeichen in der Klammer aus.';
+ if(task.d!==0&&h!==(task.d>0?'-':'+'))return `Die Verschiebung um ${Math.abs(task.d)} LE nach ${task.d>0?'rechts':'links'} braucht ${task.d>0?'ein Minus':'ein Plus'} in der Klammer: (x ${task.d>0?'−':'+'} ${Math.abs(task.d)})².`;
+ if(Number(raw[2])!==Math.abs(task.e))return 'Prüfe die Zahl nach der Klammer: Sie gibt die Anzahl der LE nach oben oder unten an.';
+ if(task.e!==0&&!v)return 'Wähle das Rechenzeichen nach der Klammer aus.';
+ if(task.e!==0&&v!==(task.e>0?'+':'-'))return `Nach ${task.e>0?'oben':'unten'} bedeutet ${task.e>0?'Plus':'Minus'} nach der Klammer.`;
+ return '';
+}
+let mission,missionNumber=0,missionDone=false,missionRevealed=false;
+function startMission(){
+ missionNumber++;missionDone=false;missionRevealed=false;
+ const a=rand([-.5,-1,-1.5,-2,.5,1,1.5,2]),d=rand([-3,-2,-1,1,2,3]),e=rand([-3,-2,-1,1,2,3]);mission={a,d,e};
+ const kind=(missionNumber-1)%3;
+ const brief=kind===0?`Stelle eine Parabel mit Scheitelpunkt S(${d} | ${e}) ein, die durch P(${d+1} | ${num(e+a)}) verläuft.`:kind===1?`Stelle die grün gestrichelte Zielparabel genau nach. Ihr Scheitelpunkt ist S(${d} | ${e}); ein weiterer Punkt ist P(${d+1} | ${num(e+a)}).`:`Baue diese Parabel: ${a<0?'Spiegelung an der x-Achse, ':''}Streckung in y-Richtung mit Faktor ${num(Math.abs(a))}, Verschiebung um ${Math.abs(d)} LE nach ${d>0?'rechts':'links'} und ${Math.abs(e)} LE nach ${e>0?'oben':'unten'}.`;
+ $('count').textContent=stats[5]+' Missionen gelöst';
+ $('content').innerHTML=`<div class="mission"><span class="eyebrow">MISSION ${missionNumber} · ${['ZWEI PUNKTE TREFFEN','ZIELPARABEL NACHBAUEN','BAUPLAN UMSETZEN'][kind]}</span><p id="mission-brief"></p></div><div class="lab"><div><div class="equation" id="eq"></div><div id="plot"></div></div><div>`+[['a',-3,3,.5,1],['d',-4,4,1,0],['e',-4,4,1,0]].map(([id,min,max,step,val])=>`<label>${id==='a'?'Faktor a':id==='d'?'Verschiebung rechts / links':'Verschiebung oben / unten'}: <output id="o${id}">${id==='a'?factorMark(val):val}</output><input aria-label="Parameter ${id}" id="${id}" type="range" min="${min}" max="${max}" step="${step}" value="${val}"></label>`).join('')+`<p class="note" id="labnote"></p><button id="labreset">Regler zurücksetzen</button></div></div><div class="actions"><button class="primary" id="missioncheck">Mission prüfen</button><button id="missionhint">Tipp</button><button id="missionsolution">Lösung zeigen</button><button id="nextmission">Neue Mission →</button></div><div id="feedback" role="status" aria-live="polite"></div>`;
+ coordinateText($('mission-brief'),brief);
+ ['a','d','e'].forEach(id=>{const slider=$(id);slider.oninput=lab;const group=document.createElement('div');group.className='slider-controls';slider.parentNode.insertBefore(group,slider);const minus=document.createElement('button'),plus=document.createElement('button');minus.type=plus.type='button';minus.textContent='−';plus.textContent='+';minus.setAttribute('aria-label',slider.getAttribute('aria-label')+' verringern');plus.setAttribute('aria-label',slider.getAttribute('aria-label')+' erhöhen');minus.onclick=()=>{slider.stepDown();lab()};plus.onclick=()=>{slider.stepUp();lab()};group.append(minus,slider,plus)});
+ $('labreset').onclick=()=>{$('a').value=1;$('d').value=0;$('e').value=0;lab()};
+ $('nextmission').onclick=startMission;
+ $('missionhint').onclick=()=>feedback('Stelle zuerst den Scheitelpunkt mit den beiden Verschiebungsreglern ein. Am Punkt 1 LE rechts vom Scheitelpunkt ist der Höhenunterschied gleich a.');
+ $('missionsolution').onclick=()=>{missionRevealed=true;feedback(`Gesucht ist f(x) = ${term(a,d,e)}. Regler: a = ${num(a)}, waagerechte Verschiebung = ${d}, senkrechte Verschiebung = ${e}.`)};
+ $('missioncheck').onclick=()=>{const actual=['a','d','e'].map(id=>Number($(id).value));const correct=actual.every((v,i)=>v===[a,d,e][i]);if(correct){if(!missionDone&&!missionRevealed){stats[5]++;score()}missionDone=true;$('count').textContent=stats[5]+' Missionen gelöst';feedback('Ziel erreicht! '+`f(x) = ${term(a,d,e)}.`+(missionRevealed?' Versuche die nächste Mission ohne aufgedeckte Lösung.':' Starte eine neue Mission!'))}else if(actual[1]!==d||actual[2]!==e)feedback(`Noch nicht am Ziel. Dein Scheitelpunkt ist S(${actual[1]} | ${actual[2]}). Gesucht ist S(${d} | ${e}). Prüfe die beiden Verschiebungsregler.`,true);else feedback('Der Scheitelpunkt stimmt! Passe jetzt den Faktor a an: Achte auf Öffnungsrichtung und Breite.',true)};
+ mission.showTarget=kind===1;lab();
+}
+function lab(){let a=Number($('a').value),d=Number($('d').value),e=Number($('e').value);$('oa').innerHTML=factorMark(num(a));['d','e'].forEach(id=>$('o'+id).textContent=num($(id).value));coordinateText($('eq'),'f(x) = '+term(a,d,e));let graph=svg(a,d,e);if(mission.showTarget){let path='';for(let x=-10;x<=10;x+=.04)path+=(path?'L':'M')+(240+x*24).toFixed(2)+' '+(180-(mission.a*(x-mission.d)**2+mission.e)*24).toFixed(2);graph=graph.replace('</svg>',`<path d="${path}" stroke="#829d43" stroke-width="3" stroke-dasharray="7 5" fill="none" clip-path="url(#clip)"/></svg>`)}$('plot').innerHTML=graph;coordinateText($('labnote'),a===0?'Bei a = 0 entsteht eine konstante Funktion, keine Parabel.':`Deine Parabel: S(${d} | ${e}) · ${a<0?'nach unten':'nach oben'} geöffnet.`)}
+const stationButtons=names.map((name,i)=>`<button type="button" data-mode="${i}"><span>0${i+1}</span> &nbsp;${name}<span class="station-check" aria-hidden="true" hidden>✓</span></button>`).join('');
+$('nav').innerHTML=stationButtons;
+$('mobile-nav').innerHTML=stationButtons;
+document.querySelectorAll('[data-mode]').forEach(button=>button.onclick=()=>{
+ switchMode(Number(button.dataset.mode));
+ if(button.closest('#mobile-nav'))$('title').focus();
+});
+$('next-station').onclick=()=>{
+ switchMode(mode+1);
+ $('title').focus();
+};
+$('reset').onclick=()=>{if(confirm('Gespeicherten Fortschritt zurücksetzen?')){stats=names.map(()=>0);score();switchMode(mode)}};score();switchMode(0);
+
+</script></body></html>
